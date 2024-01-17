@@ -347,7 +347,7 @@ const App = () => {
         ref={webcamRef}
         width={600}
         height={450}
-        videoConstraints={{ facingMode: "environment" }}
+        //videoConstraints={{ facingMode: "environment" }}
       />
       <div ref={canvasRef}></div>
     </div>
