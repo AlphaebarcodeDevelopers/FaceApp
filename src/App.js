@@ -230,7 +230,7 @@ const App = () => {
 
         results.some(({ label, distance }, i) => {
           const box = resizedDetections[i].detection.box;
-          if (1 - distance > 0.6) {
+          if (1 - distance > 0.3) {
             const drawBox = new faceapi.draw.DrawBox(box, {
               label: label.toString() + "  " + (1 - distance).toFixed(2),
             });
@@ -243,17 +243,6 @@ const App = () => {
       }, 500);
     }
   };
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        alert("yes");
-      })
-      .catch((error) => {
-        console.error("Error accessing camera:", error);
-        alert(error);
-      });
-  }, []);
 
   return (
     <div>
