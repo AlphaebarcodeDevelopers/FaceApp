@@ -230,7 +230,7 @@ const App = () => {
 
         results.some(({ label, distance }, i) => {
           const box = resizedDetections[i].detection.box;
-          if (1 - distance > 0.3) {
+          if (1 - distance > 0.55) {
             const drawBox = new faceapi.draw.DrawBox(box, {
               label: label.toString() + "  " + (1 - distance).toFixed(2),
             });
@@ -245,9 +245,9 @@ const App = () => {
   };
 
   return (
-    <div class="container">
-      <Webcam ref={webcamRef} width={"100%"} height={"100%"} />
-      <canvas ref={canvasRef}></canvas>
+    <div>
+      <Webcam ref={webcamRef} width={600} height={450} />
+      <div ref={canvasRef}></div>
     </div>
   );
 };
