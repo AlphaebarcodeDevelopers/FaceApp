@@ -246,7 +246,7 @@ const App = () => {
 
   return (
     <div>
-      <Webcam ref={webcamRef} width={600} height={450} />
+      <Webcam ref={webcamRef} width={"100%"} height={"100%"} />
       <canvas ref={canvasRef}></canvas>
     </div>
   );
