@@ -7,10 +7,10 @@ body {
   align-items: center;
   justify-content: center;
 }
-
+/* 
 canvas {
   position: absolute;
-}
+} */
 Webcam {
   border-color: black;
   border-width: 2px;
