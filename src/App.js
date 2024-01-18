@@ -63,6 +63,9 @@ const App = () => {
     }
   };
 
+  // To Store Data in Server First Time...
+
+  // const storageData = await getLabeledFaceDescriptionsFirst()
   const getLabeledFaceDescriptionsFirst = async () => {
     return Promise.all(
       Alphalabels.labels.map(async (label) => {
@@ -78,10 +81,12 @@ const App = () => {
 
           descriptions.push(detections.descriptor);
         }
+
         return new faceapi.LabeledFaceDescriptors(label, descriptions);
       })
     );
   };
+
   const getLabeledFaceDescriptionsSecond = async () => {
     return Promise.all(
       Alphalabels.labels.map(async (label, index) => {
@@ -148,14 +153,16 @@ const App = () => {
       infoBox.style.height = "10%";
 
       setInterval(async () => {
-        let resizedDetections;
         if (!isApiCall) {
           const detections = await faceapi
             .detectAllFaces(webcamRef.current.video)
             .withFaceLandmarks()
             .withFaceDescriptors(true);
 
-          resizedDetections = faceapi.resizeResults(detections, displaySize);
+          const resizedDetections = faceapi.resizeResults(
+            detections,
+            displaySize
+          );
 
           const results = resizedDetections.map((d) => {
             return faceMatcher.findBestMatch(d.descriptor);
@@ -167,13 +174,14 @@ const App = () => {
                 detectCount++;
               } else {
                 detectCount = 0;
+                setNow(0);
               }
               prevName = label;
               setNow(Math.round(((detectCount + 1) / 3) * 100));
               if (detectCount >= 3) {
                 detectCount = 0;
-                setNow(0);
                 isApiCall = true;
+                setNow(0);
 
                 infoBox.innerHTML = `Name: ${label} <br> Accuracy: ${(
                   1 - distance
@@ -210,11 +218,9 @@ const App = () => {
     }, 3000);
   };
 
-  // console.log("detect  : ", detectCount);
-
   return (
     <div>
-      <Webcam ref={webcamRef} width={600} height={450} />
+      <Webcam ref={webcamRef} width={600} height={450} mirrored={true} />
       <ProgressBar animated now={now} label={`${now}%`} />
     </div>
   );
