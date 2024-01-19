@@ -148,11 +148,12 @@ const App = () => {
       infoBox.style.position = "fixed";
       infoBox.style.bottom = "50%";
       infoBox.style.left = "50%";
+      infoBox.style.width = "50%";
       infoBox.style.transform = "translateX(-50%)";
       infoBox.style.backgroundColor = "#fff";
       infoBox.style.padding = "10px";
-      infoBox.style.border = "2px solid black";
-      infoBox.style.height = "";
+      // infoBox.style.border = "2px solid black";
+      // infoBox.style.height = "";
 
       setInterval(async () => {
         if (!isApiCall) {
@@ -216,9 +217,19 @@ const App = () => {
   const DialogOpen = (label, distance) => {
     isApiCall = true;
 
-    infoBox.innerHTML = `Name: ${label} <br> Accuracy: ${(1 - distance).toFixed(
-      2
-    )} <br><img src=${doneImage}  width="30" height="30"> <strong>Attendance Marked</strong>`;
+    infoBox.innerHTML = `<h3 class='text-success'>${label}</h3> <p><strong>${new Intl.DateTimeFormat(
+      "en-US",
+      {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }
+    ).format(
+      Date.now()
+    )}</strong></p> <img src=${doneImage}  width="30" height="30"> <strong>Attendance Marked</strong>`;
 
     if (!infoBox.parentNode) {
       document.body.appendChild(infoBox);
@@ -227,9 +238,7 @@ const App = () => {
   const RepeatDialogOpen = (label, distance) => {
     isApiCall = true;
 
-    infoBox.innerHTML = `Name: ${label} <br> Accuracy: ${(1 - distance).toFixed(
-      2
-    )} <br><img src=${wrongImage}  width="30" height="30"> <strong>AllReady Attendanced</strong>`;
+    infoBox.innerHTML = `<h3 class='text-danger'> ${label}</h3> <img src=${wrongImage}  width="30" height="30"> <strong>AllReady Attendanced</strong>`;
 
     if (!infoBox.parentNode) {
       document.body.appendChild(infoBox);
@@ -242,7 +251,7 @@ const App = () => {
         infoBox.parentNode.removeChild(infoBox);
       }
       isApiCall = false;
-    }, 500000);
+    }, 5000);
   };
 
   return (
