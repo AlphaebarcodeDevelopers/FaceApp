@@ -1,0 +1,22 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.video {
+  max-width: 100%;
+  height: auto;
+  transform: scaleX(-1);
+  height: 90%;
+  object-fit: cover;
+  margin-top: 12px;
+}
+
+.attendance_webcam {
+  width: 100%;
+  height: 100%;
+}

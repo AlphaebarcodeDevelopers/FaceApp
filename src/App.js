@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import Webcam from "react-webcam";
-import "./style.css";
+import "./App.css";
 import Alphalabels from "./member";
 import doneImage from "./assets/done.png";
 import wrongImage from "./assets/wrong.png";
@@ -149,10 +149,10 @@ const App = () => {
       infoBox.style.bottom = "50%";
       infoBox.style.left = "50%";
       infoBox.style.transform = "translateX(-50%)";
-      infoBox.style.backgroundColor = "rgba(255, 255, 255)";
+      infoBox.style.backgroundColor = "#fff";
       infoBox.style.padding = "10px";
       infoBox.style.border = "2px solid black";
-      infoBox.style.height = "10%";
+      infoBox.style.height = "";
 
       setInterval(async () => {
         if (!isApiCall) {
@@ -242,13 +242,28 @@ const App = () => {
         infoBox.parentNode.removeChild(infoBox);
       }
       isApiCall = false;
-    }, 5000);
+    }, 500000);
   };
 
   return (
-    <div>
-      <Webcam ref={webcamRef} width={600} height={450} mirrored={true} />
-      <ProgressBar animated now={now} label={`${now}%`} />
+    <div className="container">
+      <div className="attendance_webcam">
+        <Webcam
+          className="video"
+          // style={{ maxWidth: "100%", height: "auto" }}
+          ref={webcamRef}
+          mirrored={true}
+          allowFullScreen={true}
+        />
+        <div className="custom_ProgressBar">
+          <ProgressBar
+            style={{ maxWidth: "100%", width: "100%" }}
+            animated
+            now={now}
+            label={`${now}%`}
+          />
+        </div>
+      </div>
     </div>
   );
 };
