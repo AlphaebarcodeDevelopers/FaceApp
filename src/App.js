@@ -242,7 +242,7 @@ const App = () => {
         infoBox.parentNode.removeChild(infoBox);
       }
       isApiCall = false;
-    }, 3000);
+    }, 5000);
   };
 
   return (
