@@ -148,10 +148,11 @@ const App = () => {
       infoBox.style.position = "fixed";
       infoBox.style.bottom = "50%";
       infoBox.style.left = "50%";
-      infoBox.style.width = "50%";
+      infoBox.style.width = "95%";
       infoBox.style.transform = "translateX(-50%)";
       infoBox.style.backgroundColor = "#fff";
-      infoBox.style.padding = "10px";
+      infoBox.style.padding = "20px";
+
       // infoBox.style.border = "2px solid black";
       // infoBox.style.height = "";
 
@@ -266,7 +267,7 @@ const App = () => {
         />
         <div className="custom_ProgressBar">
           <ProgressBar
-            style={{ maxWidth: "100%", width: "100%" }}
+            style={{ maxWidth: "100%", width: "100%", marginHorizontal: 10 }}
             animated
             now={now}
             label={`${now}%`}
