@@ -4,6 +4,7 @@ import Webcam from "react-webcam";
 import "./style.css";
 import Alphalabels from "./member";
 import doneImage from "./assets/done.png";
+import wrongImage from "./assets/wrong.png";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 let isApiCall = false;
@@ -14,6 +15,7 @@ const App = () => {
   const webcamRef = useRef(null);
   let infoBox = "";
   const [now, setNow] = useState(0);
+  const Attendance = [];
 
   useEffect(() => {
     detectCount = 0;
@@ -170,7 +172,7 @@ const App = () => {
 
           results.some(({ label, distance }, i) => {
             if (1 - distance > 0.6) {
-              if (label == prevName) {
+              if (label === prevName) {
                 detectCount++;
               } else {
                 detectCount = 0;
@@ -178,20 +180,23 @@ const App = () => {
               }
               prevName = label;
               setNow(Math.round(((detectCount + 1) / 3) * 100));
+              // if (detectCount >= 1) {
+              //   setInterval(() => {
+              //     detectCount = 0;
+              //     setNow(0);
+              //   }, 5000);
+              // }
               if (detectCount >= 3) {
                 detectCount = 0;
-                isApiCall = true;
                 setNow(0);
 
-                infoBox.innerHTML = `Name: ${label} <br> Accuracy: ${(
-                  1 - distance
-                ).toFixed(
-                  2
-                )} <br><img src=${doneImage}  width="30" height="30"> <strong>Attendance Marked</strong>`;
-
-                if (!infoBox.parentNode) {
-                  document.body.appendChild(infoBox);
+                if (Attendance.find((item) => item === label)) {
+                  RepeatDialogOpen(label, distance);
+                } else {
+                  Attendance.push(label);
+                  DialogOpen(label, distance);
                 }
+                console.log(Attendance);
                 DialogClose();
                 return true;
               } else {
@@ -208,6 +213,28 @@ const App = () => {
     }
   };
 
+  const DialogOpen = (label, distance) => {
+    isApiCall = true;
+
+    infoBox.innerHTML = `Name: ${label} <br> Accuracy: ${(1 - distance).toFixed(
+      2
+    )} <br><img src=${doneImage}  width="30" height="30"> <strong>Attendance Marked</strong>`;
+
+    if (!infoBox.parentNode) {
+      document.body.appendChild(infoBox);
+    }
+  };
+  const RepeatDialogOpen = (label, distance) => {
+    isApiCall = true;
+
+    infoBox.innerHTML = `Name: ${label} <br> Accuracy: ${(1 - distance).toFixed(
+      2
+    )} <br><img src=${wrongImage}  width="30" height="30"> <strong>AllReady Attendanced</strong>`;
+
+    if (!infoBox.parentNode) {
+      document.body.appendChild(infoBox);
+    }
+  };
   const DialogClose = () => {
     setTimeout(() => {
       infoBox.innerHTML = "";
